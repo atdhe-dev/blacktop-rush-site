@@ -6,7 +6,8 @@ const names = ['01_wash', '02_dry', '03_seal', '04_edge', '05_finale', '06_menu'
 (async () => {
   const files = [];
   for (const n of names) files.push({ name: n + '.png', buf: await (await fetch('screenshots/ios_6.3in/' + n + '.png')).arrayBuffer() });
-  if (window.opener) { window.opener.postMessage({ kind: 'br-shots', files }, 'https://appstoreconnect.apple.com'); document.getElementById('s').textContent = 'Sent. You can close this tab.'; }
+  const t = window.opener || (window.parent !== window ? window.parent : null);
+  if (t) { t.postMessage({ kind: 'br-shots', files }, 'https://appstoreconnect.apple.com'); document.getElementById('s').textContent = 'Sent. You can close this tab.'; }
   else document.getElementById('s').textContent = 'Open this from App Store Connect.';
 })();
 </script>
